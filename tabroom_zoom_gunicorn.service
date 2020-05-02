@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon
+Requires=tabroom_zoom_gunicorn.socket
+After=network.target
+
+[Service]
+User=omajoshi9
+Group=www-data
+WorkingDirectory=/home/omajoshi9/tabroom_zoom/tabroom_zoom
+ExecStart=/home/omajoshi9/tabroom_zoom/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/tabroom_zoom_gunicorn.sock \
+          tabroom_zoom.wsgi:application
+
+[Install]
+WantedBy=multi-user.target

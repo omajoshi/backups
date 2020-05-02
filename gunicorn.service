@@ -1,0 +1,17 @@
+[Unit]
+Description=gunicorn daemon
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=omajoshi9
+Group=www-data
+WorkingDirectory=/home/omajoshi9/pingpong/pingpong
+ExecStart=/home/omajoshi9/pingpong/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          pingpong.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
